@@ -18,12 +18,21 @@ public enum HuffmanValue<T> {
   case value(T)
   case terminatingValue
   
-  func getValue() -> T? {
+  public func unwrap() -> T? {
     switch self {
     case .value(let item):
       return item
     default:
       return nil
+    }
+  }
+  
+  public func isTerminal() -> Bool {
+    switch self {
+    case .terminatingValue:
+      return true
+    default:
+      return false
     }
   }
 }
@@ -41,7 +50,7 @@ public func ==<T : Equatable>(lhs: HuffmanValue<T>, rhs: HuffmanValue<T>) -> Boo
   }
 }
 
-open class HuffmanTreeNode<T> {
+public class HuffmanTreeNode<T> {
   var priority: Int = 0
   var depth : UInt8 = 0
   var value: HuffmanValue<T>
@@ -62,18 +71,43 @@ open class HuffmanTreeNode<T> {
               priority: 0)
   }
   
-  open func nodeForItem(_ item : UInt8) throws -> HuffmanTreeNode<T> {
+  public func getLeftNode() throws -> HuffmanTreeNode<T> {
+    guard let node = leftNode else {
+      throw HuffmanTreeErrors.invalidNode
+    }
+    return node
+  }
+  
+  public func getRightNode() throws -> HuffmanTreeNode<T> {
+    guard let node = rightNode else {
+      throw HuffmanTreeErrors.invalidNode
+    }
+    return node
+  }
+  
+  public func nodeForItem(_ item : UInt8) throws -> HuffmanTreeNode<T> {
     guard let node = item == 0 ? leftNode : rightNode else {
       throw HuffmanTreeErrors.invalidNode
     }
     return node
   }
   
-  open func isLeaf() -> Bool {
+  public func isLeaf() -> Bool {
     return self.leftNode == nil && self.rightNode == nil
   }
   
-  open func getValue() throws -> T {
+  public var isTerminal : Bool {
+    get {
+      switch value {
+      case .terminatingValue:
+        return true
+      default:
+        return false
+      }
+    }
+  }
+  
+  public func getValue() throws -> T {
     switch value {
     case .value(let item):
       return item
@@ -82,36 +116,4 @@ open class HuffmanTreeNode<T> {
     }
   }
   
-}
-
-public func createEncodedCharacters<T : Hashable>(_ rootNode : HuffmanTreeNode<T>?) throws -> HuffmanTable<T> {
-  switch rootNode {
-  case .none: throw HuffmanTreeErrors.treeIsEmpty
-  case .some(let node): return try createEncodedCharacters(node)
-  }
-}
-
-public func createEncodedCharacters<T : Hashable>(_ rootNode : HuffmanTreeNode<T>) throws -> HuffmanTable<T> {
-  return try createEncodedCharacters(rootNode, 0, 0)
-}
-
-private func createEncodedCharacters<T : Hashable>(_ rootNode : HuffmanTreeNode<T>, _ currentLevel : UInt8, _ value: Int32) throws
-  -> HuffmanTable<T> {
-    if rootNode.isLeaf() {
-      switch rootNode.value {
-      case .none:
-        throw HuffmanTreeErrors.invalidTree
-      default:
-        return HuffmanTable(values: [EncodedValue(rootNode.value, currentLevel, value)])
-      }
-    }
-    var leftDictionary : HuffmanTable<T> = HuffmanTable(values: [])
-    var rightDictionary : HuffmanTable<T> = HuffmanTable(values: [])
-    if let leftNode = rootNode.leftNode {
-      leftDictionary = try createEncodedCharacters(leftNode, currentLevel + 1, value)
-    }
-    if let rightNode = rootNode.rightNode {
-      rightDictionary = try createEncodedCharacters(rightNode, currentLevel + 1, value + (1 << Int32(currentLevel)))
-    }
-    return leftDictionary + rightDictionary
 }

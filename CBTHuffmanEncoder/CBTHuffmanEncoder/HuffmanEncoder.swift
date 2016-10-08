@@ -7,23 +7,15 @@
 //
 
 public func encodeBytesWithTermination<T>(_ source: [T], table:HuffmanTable<T>) throws -> [EncodedEntity] {
-  guard let terminatingValue = table.codeForHuffmanValue(HuffmanValue.terminatingValue) else {
-    throw HuffmanTreeErrors.invalidTree
-  }
+  let terminatingValue = try table.codeForHuffmanValue(HuffmanValue.terminatingValue)
   return [try source.map { item -> EncodedEntity in
-    guard let value = table.codeForValue(item) else {
-      throw HuffmanTreeErrors.invalidSequence
-    }
-    return value
+    return try table.codeForValue(item)
     }, [terminatingValue]].flatMap { $0 }
 }
 
 public func encodeBytes<T>(_ source: [T], table:HuffmanTable<T>) throws -> [EncodedEntity] {
   return try source.map { item -> EncodedEntity in
-    guard let value = table.codeForValue(item) else {
-      throw HuffmanTreeErrors.invalidSequence
-    }
-    return value
+    return try table.codeForValue(item)
   }
 }
 

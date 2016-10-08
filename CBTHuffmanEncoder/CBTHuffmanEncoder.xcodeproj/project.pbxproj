@@ -37,7 +37,7 @@
 		E5544A361D8D12C900F48BBB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E5544A421D8D140E00F48BBB /* EncodedEntity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EncodedEntity.swift; sourceTree = "<group>"; };
 		E5544A431D8D140E00F48BBB /* FrequencyMap.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FrequencyMap.swift; sourceTree = "<group>"; };
-		E5544A441D8D140E00F48BBB /* HuffmanTable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HuffmanTable.swift; sourceTree = "<group>"; };
+		E5544A441D8D140E00F48BBB /* HuffmanTable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = HuffmanTable.swift; path = DataStructures/HuffmanTable.swift; sourceTree = "<group>"; };
 		E5544A451D8D140E00F48BBB /* HuffmanTreeNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HuffmanTreeNode.swift; sourceTree = "<group>"; };
 		E5544A471D8D140E00F48BBB /* HuffmanEncoder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HuffmanEncoder.swift; sourceTree = "<group>"; };
 		E5544A481D8D140E00F48BBB /* HuffmanTree.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HuffmanTree.swift; sourceTree = "<group>"; };
@@ -85,6 +85,7 @@
 			children = (
 				E5544A411D8D140E00F48BBB /* DataStructures */,
 				E5544A471D8D140E00F48BBB /* HuffmanEncoder.swift */,
+				E5544A441D8D140E00F48BBB /* HuffmanTable.swift */,
 				E5544A481D8D140E00F48BBB /* HuffmanTree.swift */,
 				E5544A291D8D12C900F48BBB /* CBTHuffmanEncoder.h */,
 				E5544A2A1D8D12C900F48BBB /* Info.plist */,
@@ -106,7 +107,6 @@
 			children = (
 				E5544A421D8D140E00F48BBB /* EncodedEntity.swift */,
 				E5544A431D8D140E00F48BBB /* FrequencyMap.swift */,
-				E5544A441D8D140E00F48BBB /* HuffmanTable.swift */,
 				E5544A451D8D140E00F48BBB /* HuffmanTreeNode.swift */,
 			);
 			path = DataStructures;

@@ -6,7 +6,7 @@
 //  Copyright © 2016 sergeysmagleev. All rights reserved.
 //
 
-open class EncodedEntityGenerator : IteratorProtocol {
+public class EncodedEntityGenerator : IteratorProtocol {
   
   public typealias Element = UInt8
   
@@ -14,12 +14,12 @@ open class EncodedEntityGenerator : IteratorProtocol {
   let encodedValue : Int32
   let codeLength : UInt8
   
-  init (encodedValue : Int32, codeLength : UInt8) {
+  public init (encodedValue : Int32, codeLength : UInt8) {
     self.encodedValue = encodedValue
     self.codeLength = codeLength
   }
   
-  open func next() -> EncodedEntityGenerator.Element? {
+  public func next() -> EncodedEntityGenerator.Element? {
     if (UInt8(currentIndex) < codeLength) {
       let val = UInt8((encodedValue & (1 << currentIndex)) >> currentIndex)
       currentIndex += 1
@@ -29,7 +29,7 @@ open class EncodedEntityGenerator : IteratorProtocol {
   }
 }
 
-open class EncodedEntitySequence : Sequence {
+public class EncodedEntitySequence : Sequence {
   
   public typealias Iterator = EncodedEntityGenerator
   
@@ -37,16 +37,16 @@ open class EncodedEntitySequence : Sequence {
   
   let entity : EncodedEntity
   
-  init(entity : EncodedEntity) {
+  public init(entity : EncodedEntity) {
     self.entity = entity
   }
   
-  open func makeIterator() -> EncodedEntitySequence.Iterator {
+  public func makeIterator() -> EncodedEntitySequence.Iterator {
     return EncodedEntityGenerator(encodedValue: entity.encodedValue, codeLength: entity.codeLength)
   }
 }
 
-open class ByteSequence : Sequence {
+public class ByteSequence : Sequence {
   
   public typealias Iterator = EncodedEntityGenerator
   
@@ -56,12 +56,12 @@ open class ByteSequence : Sequence {
     self.byte = byte
   }
   
-  open func makeIterator() -> ByteSequence.Iterator {
+  public func makeIterator() -> ByteSequence.Iterator {
     return EncodedEntityGenerator(encodedValue: Int32(byte), codeLength: 8)
   }
 }
 
-open class EncodedEntity {
+public class EncodedEntity {
   
   var codeLength : UInt8 = 0
   var encodedValue : Int32 = 0
@@ -87,7 +87,7 @@ open class EncodedEntity {
   }
 }
 
-open class EncodedValue<T> : EncodedEntity {
+public class EncodedValue<T> : EncodedEntity {
   var value : HuffmanValue<T>
   var pathString : String
   
@@ -97,8 +97,8 @@ open class EncodedValue<T> : EncodedEntity {
     super.init(codeLength: codeLength, encodedValue: encodedValue)
   }
   
-  init (value : T, stringRepresentation : String) {
-    self.value = HuffmanValue.value(value)
+  public init (value : HuffmanValue<T>, stringRepresentation : String) {
+    self.value = value
     pathString = stringRepresentation
     var value = 0
     var count = 0
