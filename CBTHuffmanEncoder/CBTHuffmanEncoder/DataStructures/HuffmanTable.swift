@@ -29,20 +29,12 @@ public struct HuffmanTable<T : Equatable> {
   }
   
   public func codeForHuffmanValue(_ value : HuffmanValue<T>) throws -> EncodedEntity {
-    let optionalEntity = values.filter { item in
-      switch item.value {
-      case .value(_):
-        return item.value == value
-      case .terminatingValue:
-        return value == HuffmanValue.terminatingValue
-      case .none:
-        return false
+    for item in values {
+      if (item.value == value) {
+        return item
       }
-      }.first
-    guard let entity = optionalEntity else {
-      throw HuffmanTableErrors.MissingValue
     }
-    return entity
+    throw HuffmanTableErrors.MissingValue
   }
 }
 

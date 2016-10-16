@@ -27,6 +27,15 @@ public enum HuffmanValue<T> {
     }
   }
   
+  public func forceUnwrap() throws -> T {
+    switch self {
+    case .value(let item):
+      return item
+    default:
+      throw HuffmanTreeErrors.invalidNode
+    }
+  }
+  
   public func isTerminal() -> Bool {
     switch self {
     case .terminatingValue:
@@ -53,22 +62,28 @@ public func ==<T : Equatable>(lhs: HuffmanValue<T>, rhs: HuffmanValue<T>) -> Boo
 public class HuffmanTreeNode<T> {
   var priority: Int = 0
   var depth : UInt8 = 0
-  var value: HuffmanValue<T>
+  var valueVar: HuffmanValue<T>
   
   weak var parentNode : HuffmanTreeNode<T>?
   var leftNode : HuffmanTreeNode<T>?
   var rightNode : HuffmanTreeNode<T>?
   
   required public init (value: HuffmanValue<T>, depth: UInt8, priority: Int) {
-    self.value = value
+    self.valueVar = value
     self.depth = depth
     self.priority = priority
   }
   
-  convenience init() {
+  convenience public init() {
     self.init(value: HuffmanValue.none,
               depth: 0,
               priority: 0)
+  }
+  
+  public var value : HuffmanValue<T> {
+    get {
+      return valueVar
+    }
   }
   
   public func getLeftNode() throws -> HuffmanTreeNode<T> {
@@ -94,26 +109,6 @@ public class HuffmanTreeNode<T> {
   
   public func isLeaf() -> Bool {
     return self.leftNode == nil && self.rightNode == nil
-  }
-  
-  public var isTerminal : Bool {
-    get {
-      switch value {
-      case .terminatingValue:
-        return true
-      default:
-        return false
-      }
-    }
-  }
-  
-  public func getValue() throws -> T {
-    switch value {
-    case .value(let item):
-      return item
-    default:
-      throw HuffmanTreeErrors.invalidNode
-    }
   }
   
 }

@@ -31,7 +31,6 @@ public func saveEncodedDataToByteArray(_ source: [EncodedEntity]) -> [UInt8] {
         currentShift = 0
         retVal.append(currentByte)
         currentByte = 0
-      } else {
       }
     }
   }

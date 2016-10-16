@@ -52,7 +52,7 @@ public func createTreeFromTable<T>(_ huffmanTable : [EncodedValue<T>]) -> Huffma
         currentElement = currentElement.rightNode!
       }
     }
-    currentElement.value = tableItem.value
+    currentElement.valueVar = tableItem.value
     currentElement = rootNode;
   }
   return rootNode;

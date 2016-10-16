@@ -25,6 +25,7 @@ public class EncodedEntityGenerator : IteratorProtocol {
       currentIndex += 1
       return val
     }
+    currentIndex = 0
     return nil
   }
 }
