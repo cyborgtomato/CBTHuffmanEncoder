@@ -88,7 +88,7 @@ public class EncodedEntity {
   }
 }
 
-public class EncodedValue<T> : EncodedEntity {
+public class EncodedValue<T : Hashable> : EncodedEntity {
   var value : HuffmanValue<T>
   var pathString : String
   

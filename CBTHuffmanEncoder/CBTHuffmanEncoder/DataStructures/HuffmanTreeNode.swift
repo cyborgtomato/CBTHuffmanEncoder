@@ -13,7 +13,7 @@ public enum HuffmanTreeErrors : Error {
   case invalidSequence
 }
 
-public enum HuffmanValue<T> {
+public enum HuffmanValue<T : Hashable> : Hashable {
   case none
   case value(T)
   case terminatingValue
@@ -44,6 +44,17 @@ public enum HuffmanValue<T> {
       return false
     }
   }
+  
+  public var hashValue: Int {
+    switch self {
+    case .value(let item):
+      return item.hashValue + 2
+    case .none:
+      return 0
+    case .terminatingValue:
+      return 1
+    }
+  }
 }
 
 public func ==<T : Equatable>(lhs: HuffmanValue<T>, rhs: HuffmanValue<T>) -> Bool {
@@ -59,7 +70,7 @@ public func ==<T : Equatable>(lhs: HuffmanValue<T>, rhs: HuffmanValue<T>) -> Boo
   }
 }
 
-public class HuffmanTreeNode<T> {
+public class HuffmanTreeNode<T : Hashable> {
   var priority: Int = 0
   var depth : UInt8 = 0
   var valueVar: HuffmanValue<T>
