@@ -48,7 +48,7 @@ public enum HuffmanValue<T : Hashable> : Hashable {
   public var hashValue: Int {
     switch self {
     case .value(let item):
-      return item.hashValue + 2
+      return item.hashValue
     case .none:
       return 0
     case .terminatingValue:
